@@ -5,6 +5,7 @@ import requestAPI from '../services/api';
 
 function StarWarsProvider({ children }) {
   const [data, setData] = useState([]);
+  const [nameFilter, setNameFilter] = useState('');
 
   useEffect(() => {
     async function fetchAPI() {
@@ -19,6 +20,8 @@ function StarWarsProvider({ children }) {
       value={ {
         data,
         setData,
+        nameFilter,
+        setNameFilter,
       } }
     >
       {children}
