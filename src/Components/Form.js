@@ -31,7 +31,6 @@ function Form() {
 
   const availableFilters = getAllFilters
     .filter((filter) => !usedFilters.includes(filter));
-  console.log(availableFilters);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -43,6 +42,13 @@ function Form() {
       condition: 'maior que',
       value: '0',
     });
+  };
+  const filterRemover = ({ target }) => {
+    const { name } = target;
+    const newSelectedFilters = selectedFilters.filter((filter) => filter.column !== name);
+    setSelectedFilters(
+      newSelectedFilters,
+    );
   };
   return (
     <div>
@@ -99,6 +105,40 @@ function Form() {
           Filtrar
         </button>
       </form>
+      <div>
+        <button
+          onClick={ () => setSelectedFilters([]) }
+          data-testid="button-remove-filters"
+          type="button"
+        >
+          remover filtros
+
+        </button>
+      </div>
+      <div>
+        {
+          selectedFilters.map(({ column, condition, value }) => (
+            <div
+              data-testid="filter"
+              key={ column }
+            >
+              <p>{column}</p>
+              <p>{condition}</p>
+              <p>{value}</p>
+              <button
+                type="button"
+                onClick={ filterRemover }
+                name={ column }
+              >
+                excluir
+
+              </button>
+
+            </div>
+
+          ))
+        }
+      </div>
     </div>
   );
 }
