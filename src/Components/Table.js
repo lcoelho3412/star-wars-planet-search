@@ -1,8 +1,29 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
-  const { data, nameFilter } = useContext(StarWarsContext);
+  const { data,
+    dataCopy,
+    setDataCopy,
+    nameFilter,
+    selectedFilters } = useContext(StarWarsContext);
+
+  const dataTreatment = () => data.filter((planet) => (
+    selectedFilters.every((filter) => {
+      if (filter.condition === 'igual a') {
+        return +planet[filter.column] === +filter.value;
+      }
+      if (filter.condition === 'maior que') {
+        return +planet[filter.column] > +filter.value;
+      }
+      return +planet[filter.column] < +filter.value;
+    })
+  ));
+  useEffect(() => {
+    setDataCopy(
+      dataTreatment(),
+    );
+  }, [selectedFilters]);
 
   return (
     <div>
@@ -25,7 +46,7 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          { data
+          { dataCopy
             .filter(({ name }) => name
               .toLowerCase()
               .includes(nameFilter

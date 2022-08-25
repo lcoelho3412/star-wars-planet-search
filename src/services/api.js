@@ -3,7 +3,6 @@ const requestAPI = async () => {
   const response = await fetch(ENDPOINT);
   const { results } = await response.json();
   const planets = results.map(({ residents, ...rest }) => rest);
-  console.log(planets);
   return response.ok ? Promise.resolve(planets) : Promise.reject(planets);
 };
 
