@@ -8,7 +8,6 @@ function StarWarsProvider({ children }) {
   const [nameFilter, setNameFilter] = useState('');
   const [selectedFilters, setSelectedFilters] = useState([]);
   const [dataCopy, setDataCopy] = useState([]);
-  const [availableFilters, setAvailableFilters] = useState([]);
 
   useEffect(() => {
     async function fetchAPI() {
@@ -30,8 +29,6 @@ function StarWarsProvider({ children }) {
         setSelectedFilters,
         dataCopy,
         setDataCopy,
-        availableFilters,
-        setAvailableFilters,
       } }
     >
       {children}

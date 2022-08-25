@@ -6,12 +6,9 @@ function Form() {
     setNameFilter,
     selectedFilters,
     setSelectedFilters,
-    /* availableFilters,
-    setAvailableFilters, */
   } = useContext(StarWarsContext);
 
   const [selected, setSelected] = useState({
-    // estado generico para inputs
     column: 'population',
     condition: 'maior que',
     value: '0',
@@ -23,14 +20,18 @@ function Form() {
     });
   };
 
-  /*  const columnOptionRemoval = (option) => !selectedFilters
-    .find((filter) => option === filter.column); */
+  const getAllFilters = [
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water'];
 
-  const filterColumns = () => {
-    const columns = ['population', 'orbital_period',
-      'diameter', 'rotation_period', 'surface_water'];
-    return columns;
-  };
+  const usedFilters = selectedFilters.map(({ column }) => column);
+
+  const availableFilters = getAllFilters
+    .filter((filter) => !usedFilters.includes(filter));
+  console.log(availableFilters);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -38,7 +39,7 @@ function Form() {
       ...selectedFilters, selected,
     ]);
     setSelected({
-      column: '',
+      column: availableFilters[0],
       condition: 'maior que',
       value: '0',
     });
@@ -62,7 +63,7 @@ function Form() {
             data-testid="column-filter"
           >
             {
-              filterColumns().map((column) => (
+              availableFilters.map((column) => (
                 <option value={ column } key={ column }>{column}</option>
               ))
             }
