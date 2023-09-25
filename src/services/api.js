@@ -1,5 +1,5 @@
 const requestAPI = async () => {
-  const ENDPOINT = 'https://swapi-trybe.herokuapp.com/api/planets/';
+  const ENDPOINT = 'https://swapi.dev/api/planets';
   const response = await fetch(ENDPOINT);
   const { results } = await response.json();
   const planets = results.map(({ residents, ...rest }) => rest);

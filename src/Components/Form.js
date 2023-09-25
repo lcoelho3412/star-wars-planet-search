@@ -1,12 +1,9 @@
+/* eslint-disable max-len */
 import React, { useContext, useState } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Form() {
-  const {
-    setNameFilter,
-    selectedFilters,
-    setSelectedFilters,
-  } = useContext(StarWarsContext);
+  const { setNameFilter, selectedFilters, setSelectedFilters } = useContext(StarWarsContext);
 
   const [selected, setSelected] = useState({
     column: 'population',
@@ -15,9 +12,7 @@ function Form() {
   });
 
   const saveSelection = (event) => {
-    setSelected({ ...selected,
-      [event.target.name]: event.target.value,
-    });
+    setSelected({ ...selected, [event.target.name]: event.target.value });
   };
 
   const getAllFilters = [
@@ -25,18 +20,18 @@ function Form() {
     'orbital_period',
     'diameter',
     'rotation_period',
-    'surface_water'];
+    'surface_water',
+  ];
 
   const usedFilters = selectedFilters.map(({ column }) => column);
 
-  const availableFilters = getAllFilters
-    .filter((filter) => !usedFilters.includes(filter));
+  const availableFilters = getAllFilters.filter(
+    (filter) => !usedFilters.includes(filter),
+  );
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setSelectedFilters([
-      ...selectedFilters, selected,
-    ]);
+    setSelectedFilters([...selectedFilters, selected]);
     setSelected({
       column: availableFilters[0],
       condition: 'maior que',
@@ -45,13 +40,22 @@ function Form() {
   };
   const filterRemover = ({ target }) => {
     const { name } = target;
-    const newSelectedFilters = selectedFilters.filter((filter) => filter.column !== name);
-    setSelectedFilters(
-      newSelectedFilters,
+    const newSelectedFilters = selectedFilters.filter(
+      (filter) => filter.column !== name,
     );
+    setSelectedFilters(newSelectedFilters);
   };
   return (
     <div>
+      <div className="flex flex-col w-full border-opacity-50">
+        <div className="grid h-20 card bg-base-300 rounded-box place-items-center">
+          content
+        </div>
+        <div className="divider">OR</div>
+        <div className="grid h-20 card bg-base-300 rounded-box place-items-center">
+          content
+        </div>
+      </div>
       <form>
         <label htmlFor="filter">
           Busca
@@ -68,12 +72,11 @@ function Form() {
             onChange={ saveSelection }
             data-testid="column-filter"
           >
-            {
-              availableFilters.map((column) => (
-                <option value={ column } key={ column }>{column}</option>
-              ))
-            }
-
+            {availableFilters.map((column) => (
+              <option value={ column } key={ column }>
+                {column}
+              </option>
+            ))}
           </select>
         </label>
         <label htmlFor="comparison-filter">
@@ -112,32 +115,19 @@ function Form() {
           type="button"
         >
           remover filtros
-
         </button>
       </div>
       <div>
-        {
-          selectedFilters.map(({ column, condition, value }) => (
-            <div
-              data-testid="filter"
-              key={ column }
-            >
-              <p>{column}</p>
-              <p>{condition}</p>
-              <p>{value}</p>
-              <button
-                type="button"
-                onClick={ filterRemover }
-                name={ column }
-              >
-                excluir
-
-              </button>
-
-            </div>
-
-          ))
-        }
+        {selectedFilters.map(({ column, condition, value }) => (
+          <div data-testid="filter" key={ column }>
+            <p>{column}</p>
+            <p>{condition}</p>
+            <p>{value}</p>
+            <button type="button" onClick={ filterRemover } name={ column }>
+              excluir
+            </button>
+          </div>
+        ))}
       </div>
     </div>
   );
