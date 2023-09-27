@@ -96,37 +96,38 @@ function Form() {
             type="number"
           />
         </label>
-      <div className="grid grid-rows-1 grid-flow-col gap-4">
-        <button
-          className="btn btn-info gap-4"
-          type="submit"
-          data-testid="button-filter"
-          onClick={handleSubmit}
-        >
-          Filtrar
-        </button>
+        <div className="grid grid-rows-1 grid-flow-col gap-4">
+          <button
+            className="btn btn-info gap-4"
+            type="submit"
+            data-testid="button-filter"
+            onClick={handleSubmit}
+          >
+            Filtrar
+          </button>
 
-      <button
-        className="btn btn-warning gap-4"
-        onClick={() => setSelectedFilters([])}
-        data-testid="button-remove-filters"
-        type="button"
-      >
-        REMOVER
-      </button>
-
-      {selectedFilters.map(({ column, condition, value }) => (
-        <div data-testid="filter" key={column}>
-          <p>{column}</p>
-          <p>{condition}</p>
-          <p>{value}</p>
-          <button type="button" onClick={filterRemover} name={column}>
-            excluir
+          <button
+            className="btn btn-warning gap-4"
+            onClick={() => setSelectedFilters([])}
+            data-testid="button-remove-filters"
+            type="button"
+          >
+            REMOVER
           </button>
         </div>
-      ))}
-      </div>
       </form>
+      <div className=" p-2 mb-4 mt-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400">
+        {selectedFilters.map(({ column, condition, value }) => (
+          <div className="inline-grid grid-cols-4 mt-2 w-full gap-4" data-testid="filter" key={column}>
+            <p>{column}</p>
+            <p>{condition}</p>
+            <p>{value}</p>
+            <button className="btn btn-error btn-xs" type="button" onClick={filterRemover} name={column}>
+              excluir
+            </button>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
